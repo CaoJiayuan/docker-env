@@ -33,4 +33,10 @@ nginx:
   ports:
     - ${NGINX_PORT}:80
 
-
+redis:
+  image: redis:4.0.0-alpine
+  container_name: redis
+  ports:
+    - ${REDIS_PORT}:6379
+  volumes:
+    - ${STORAGE_PATH}/redis:/data
