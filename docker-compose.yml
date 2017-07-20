@@ -1,0 +1,36 @@
+mysql:
+  image: mysql
+  container_name: mysql
+  environment:
+    - MYSQL_DATABASE=${MYSQL_DATABASE}
+    - MYSQL_USER=${MYSQL_USER}
+    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    - TZ=${TIMEZONE}
+  volumes:
+    - ${STORAGE_PATH}/mysql:/var/lib/mysql
+    - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+  ports:
+    - "${MYSQL_PORT}:3306"
+php:
+  build: ./php-fpm
+  container_name: php
+  links:
+    - mysql
+  volumes:
+    - /var/www
+    - ${APP_DIR}:/var/www/app
+
+nginx:
+  build: ./nginx
+  container_name: nginx
+  volumes_from:
+    - php
+  volumes:
+    - "./nginx/conf.d:/etc/nginx/conf.d"
+  links:
+    - php
+  ports:
+    - ${NGINX_PORT}:80
+
+
