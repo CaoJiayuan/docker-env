@@ -58,4 +58,6 @@ RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 COPY ./phpmyadmin/config.inc.php /var/www/phpmyadmin/
 
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-COPY ./default.ini /usr/local/etc/php/conf.d/default.ini
+COPY ./default.ini /usr/local/etc/php/conf.d/default.ini 
+ARG TIMEZONE=UTC
+RUN echo "date.timezone=${TIMEZONE}" >> /usr/local/etc/php/conf.d/default.ini

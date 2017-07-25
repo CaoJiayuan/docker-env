@@ -20,6 +20,7 @@ services:
       args:
         - INSTALL_MEMCACHED=${INSTALL_MEMCACHED}
         - INSTALL_PHPREDIS=${INSTALL_PHPREDIS}
+        - TIMEZONE=${TIMEZONE}        
     container_name: php
     links:
       - mysql
