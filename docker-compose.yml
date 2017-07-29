@@ -20,6 +20,7 @@ services:
       args:
         - INSTALL_MEMCACHED=${INSTALL_MEMCACHED}
         - INSTALL_PHPREDIS=${INSTALL_PHPREDIS}
+        - INSTALL_MONGO=${INSTALL_MONGO}        
         - TIMEZONE=${TIMEZONE}        
     container_name: php
     links:

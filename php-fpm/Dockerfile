@@ -2,7 +2,7 @@ FROM php:7.1.7-fpm-alpine
 WORKDIR /var/www
 
 ## Dependencies ##
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk --update add libmcrypt-dev \
     wget \
     git \
@@ -46,6 +46,14 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis \
+;fi
+
+ARG INSTALL_MONGO=false
+RUN if [ ${INSTALL_MONGO} = true ]; then \
+    apk --update add pcre-dev \
+    # Install the mongodb extension
+    && pecl install mongodb && \
+    docker-php-ext-enable mongodb \
 ;fi
 
 ## Extensions ##
