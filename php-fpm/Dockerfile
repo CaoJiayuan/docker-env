@@ -69,3 +69,8 @@ COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./default.ini /usr/local/etc/php/conf.d/default.ini 
 ARG TIMEZONE=UTC
 RUN echo "date.timezone=${TIMEZONE}" >> /usr/local/etc/php/conf.d/default.ini
+RUN echo ${TIMEZONE} > /etc/timezone
+COPY ./crontab /etc/crontabs/root
+COPY ./run.sh /var/
+RUN chmod +x /var/run.sh
+CMD ["/var/run.sh"]

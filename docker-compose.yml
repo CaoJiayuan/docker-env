@@ -53,7 +53,6 @@ services:
   mongo:
     image: mongo:latest
     container_name: mongo
+    command: "-v"
     ports:
       - ${MONGO_PORT}:27017
-    volumes:
-      - ${STORAGE_PATH}/mongo:/data/db
