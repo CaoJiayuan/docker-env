@@ -16,7 +16,6 @@ RUN pip install supervisor==$SUPERVISOR_VERSION
 
 WORKDIR /etc/supervisor/conf.d
 
-COPY init.sh /usr/local/bin/init.sh
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 
 ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisor/supervisord.conf"]
