@@ -21,7 +21,7 @@ services:
         - INSTALL_MEMCACHED=${INSTALL_MEMCACHED}
         - INSTALL_PHPREDIS=${INSTALL_PHPREDIS}
         - INSTALL_MONGO=${INSTALL_MONGO}        
-        - TIMEZONE=${TIMEZONE}        
+        - TIMEZONE=${TIMEZONE}
     container_name: php
     links:
       - mysql
@@ -41,6 +41,7 @@ services:
       - php
     ports:
       - ${NGINX_PORT}:${NGINX_PORT}
+      - 8088:8081
 
   redis:
     image: redis:4.0.0-alpine
@@ -53,6 +54,19 @@ services:
   mongo:
     image: mongo:latest
     container_name: mongo
-    command: "-v"
     ports:
       - ${MONGO_PORT}:27017
+    volumes:
+      - ${STORAGE_PATH}/mongo:/data/db
+
+  queue:
+    build: ./queue-worker
+    container_name: queue-worker
+    volumes_from:
+      - php
+    links:
+      - php
+      - redis
+      - mysql
+    volumes:
+      - ./queue-worker/conf.d:/etc/supervisor/conf.d
