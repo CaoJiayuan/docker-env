@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+command=$1
+CONSOLE_COLOR_RED=31
+CONSOLE_COLOR_GREEN=32
+CONSOLE_COLOR_YELLOW=33
+CONSOLE_COLOR_BLUE=34
+CONSOLE_COLOR_MAGENTA=35
+CONSOLE_COLOR_DEEP_GREEN=36
+CONSOLE_COLOR_WHITE=37
+
+console() {
+    color=$2
+    string=$1
+    if [ ${color} == "" ]; then
+        color=${CONSOLE_COLOR_WHITE}
+    fi
+    printf "\033[${color}m${string}\n\033[0m"
+}
+if [ "$command" == "" ]; then
+	echo -e "Usage: env command"
+	echo -e "Commands:"
+	echo -e " reload -reload env"
+	exit 1
+fi
+
+if [ "$command" == "reload" ]; then
+    console "Reload nginx" ${CONSOLE_COLOR_GREEN}
+    docker exec -it nginx nginx -s reload
+    console "Reload supervisor" ${CONSOLE_COLOR_GREEN}
+    docker exec -it queue-worker supervisorctl reload
+fi
