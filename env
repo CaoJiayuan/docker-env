@@ -28,5 +28,5 @@ if [ "$command" == "reload" ]; then
     console "Reload nginx" ${CONSOLE_COLOR_GREEN}
     docker exec -it nginx nginx -s reload
     console "Reload supervisor" ${CONSOLE_COLOR_GREEN}
-    docker exec -it queue-worker supervisorctl reload
+    docker exec -it php supervisorctl reload
 fi
