@@ -21,7 +21,7 @@ RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.ph
     mv composer.phar /usr/bin/composer && \
     php -r "unlink('composer-setup.php');"
 
-ARG INSTALL_MEMCACHED=false
+ARG INSTALL_MEMCACHED=true
 RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
     # Install the php memcached extension
     apk --update add cyrus-sasl-dev libmemcached-dev zlib-dev \
@@ -40,7 +40,7 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
     && docker-php-ext-enable memcached \
 ;fi
 
-ARG INSTALL_PHPREDIS=false
+ARG INSTALL_PHPREDIS=true
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     # Install Php Redis Extension
     pecl install -o -f redis \
@@ -48,7 +48,7 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     &&  docker-php-ext-enable redis \
 ;fi
 
-ARG INSTALL_MONGO=false
+ARG INSTALL_MONGO=true
 RUN if [ ${INSTALL_MONGO} = true ]; then \
     apk --update add pcre-dev \
     # Install the mongodb extension
@@ -75,7 +75,7 @@ COPY supervisord.conf /etc/supervisor/supervisord.conf
 
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./default.ini /usr/local/etc/php/conf.d/default.ini 
-ARG TIMEZONE=UTC
+ARG TIMEZONE=Asia/Shanghai
 RUN echo "date.timezone=${TIMEZONE}" >> /usr/local/etc/php/conf.d/default.ini
 RUN echo ${TIMEZONE} > /etc/timezone
 COPY ./crontab /etc/crontabs/root
