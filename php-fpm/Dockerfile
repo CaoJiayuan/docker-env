@@ -50,9 +50,9 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
 
 ARG INSTALL_MONGO=true
 RUN if [ ${INSTALL_MONGO} = true ]; then \
-    apk --update add pcre-dev \
+    apk --update add bash pcre-dev \
     # Install the mongodb extension
-    && pecl install mongodb && \
+    && /bin/bash -lc "pecl install mongodb" && \
     docker-php-ext-enable mongodb \
 ;fi
 
