@@ -30,6 +30,7 @@ services:
       - /var/www
       - ${APP_DIR}:/var/www/app
       - ./php-fpm/supervisor/conf.d:/etc/supervisor/conf.d
+      - ./php-fpm/crontabs:/var/spool/cron/crontabs
 
   nginx:
     build: ./nginx
