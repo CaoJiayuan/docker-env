@@ -63,9 +63,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && docker-php-ext-install gd iconv opcache pdo_mysql tokenizer mcrypt mysqli sockets
     
 ## phpmyadmin ##
-RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com && \
-    composer create-project phpmyadmin/phpmyadmin --no-dev
-COPY ./phpmyadmin/config.inc.php /var/www/phpmyadmin/
+RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com && \ 
+    composer create-project phpmyadmin/phpmyadmin --repository-url=https://packagist.phpcomposer.com --no-dev
+COPY ./phpmyadmin/config.inc.php phpmyadmin/
 
 ##supervisor##
 ENV PYTHON_VERSION=2.7.12-r0
@@ -83,4 +83,5 @@ RUN echo ${TIMEZONE} > /etc/timezone
 COPY ./crontab /etc/crontabs/root
 COPY ./run.sh /var/
 RUN chmod +x /var/run.sh
+VOLUME [ "/var/www" ]
 CMD ["/var/run.sh"]
