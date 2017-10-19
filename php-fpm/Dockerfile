@@ -21,9 +21,9 @@ RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.ph
     mv composer.phar /usr/bin/composer && \
     php -r "unlink('composer-setup.php');"
 
+# Install the php memcached extension
 ARG INSTALL_MEMCACHED=true
 RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
-    # Install the php memcached extension
     apk --update add cyrus-sasl-dev libmemcached-dev zlib-dev \
     && curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
     && mkdir -p memcached \
@@ -40,9 +40,9 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
     && docker-php-ext-enable memcached \
 ;fi
 
+# Install Php Redis Extension
 ARG INSTALL_PHPREDIS=true
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
-    # Install Php Redis Extension
     pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis \
