@@ -2,6 +2,7 @@ FROM nginx:alpine
 WORKDIR /etc/nginx
 
 COPY enable_php.conf /etc/nginx/
+COPY ./default.conf /etc/nginx/
 COPY ./nginx.conf.template /etc/nginx/
 COPY ./run.sh /
 RUN chmod +x /run.sh
@@ -14,5 +15,6 @@ RUN apk update \
     && adduser -D -H -u 1000 -s /bin/bash www-data
 #CMD ["nginx"]
 EXPOSE 80 443
+VOLUME /etc/nginx/conf.d
 
 ENTRYPOINT /run.sh

@@ -45,6 +45,7 @@ services:
       - ${HTTPS_PORT}:443
     environment:
       - UPLOAD_SIZE=32M
+      - CONFIG_FILE=/var/www/app/caojiayuan/demo/nginx.conf
 
   redis:
     image: redis:4.0.0-alpine

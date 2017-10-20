@@ -1,4 +1,4 @@
 *
 !.gitignore
-!default.conf
+!../default.conf
 !phpmyadmin.conf
