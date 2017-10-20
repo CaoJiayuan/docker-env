@@ -83,5 +83,5 @@ RUN echo ${TIMEZONE} > /etc/timezone
 COPY ./crontab /etc/crontabs/root
 COPY ./run.sh /var/
 RUN chmod +x /var/run.sh
-VOLUME [ "/var/www" ]
+VOLUME [ "/var/www" , "/etc/supervisor/conf.d" ]
 CMD ["/var/run.sh"]
