@@ -29,9 +29,6 @@ services:
     volumes:
       - ${APP_DIR}:/var/www/app
       - ./php-fpm/supervisor/conf.d:/etc/supervisor/conf.d
-    environment:
-      - SUPERVISOR_CONF=/var/www/app/caojiayuan/demo/demo.conf
-      - CRONTAB_FILE=/var/www/app/caojiayuan/demo/crontab
 
   nginx:
     build: ./nginx
@@ -47,7 +44,6 @@ services:
       - ${HTTPS_PORT}:443
     environment:
       - UPLOAD_SIZE=32M
-      - CONFIG_FILE=/var/www/app/caojiayuan/demo/nginx.conf
 
   redis:
     image: redis:4.0.0-alpine
