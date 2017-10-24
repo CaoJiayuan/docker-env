@@ -26,6 +26,7 @@ http {
     keepalive_timeout  65;
 
     client_max_body_size $UPLOAD_SIZE;
+    client_body_buffer_size $BODY_BUFFER_SIZE;
 
     #gzip  on;
 
